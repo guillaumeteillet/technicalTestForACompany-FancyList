@@ -3,6 +3,59 @@
     <script type="text/javascript" src="FancyList.js"></script>
   </head>
   <body>
-    FancyList
+    <script type="text/javascript">
+    // Debug
+
+    var myList1 = new FancyList();
+    var myList2 = new FancyList(3, 2);
+    var myList3 = new FancyList(3, 44, 22, 33, 23, 34, 35,99, 093, 32);
+    var myList4 = new FancyList(["test", 3]);
+
+    console.log(myList1.getItemAt(0));
+    console.log(myList2.getItemAt(1));
+    console.log(myList3.getItemAt(0));
+    console.log(myList4.getItemAt(0));
+
+    var data = myList3.addItem(3);
+    console.log(data);
+    var data = myList3.addItem(200);
+    console.log(data);
+    var data = myList3.addItems(230, 20, 30, 2);
+    console.log(data);
+    var data = myList3.addItems([250, 90, 230]);
+    console.log(data);
+
+
+    var data = myList3.insertItemAt(3, 32);
+    console.log(data);
+
+    var data = myList3.insertItemsAt(5, 18, 33, 20);
+    console.log(data);
+
+    var data = myList3.insertItemsAt(2, 10, 44, 12);
+    console.log(data);
+
+    var data = myList3.removeItemAt(2);
+    console.log(data);
+
+    var data = myList3.removeItemsAt(2, 4);
+    console.log(data);
+
+    var data = myList3.removeItem(20);
+    console.log(data);
+
+    var data = myList3.addItems(44, 65, 44, 65, 44);
+    console.log(data);
+
+    var data = myList3.removeItems(44, 65);
+    console.log(data);
+
+    var data = myList3.addItems(22, 33, 22, 33, 22);
+    console.log(data);
+
+
+    var data = myList3.removeItems([22, 33]);
+    console.log(data);
+    </script>
   </body>
 </html>

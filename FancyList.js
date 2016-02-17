@@ -9,14 +9,20 @@ function FancyList() {
     {
       for ( var o = 0; o < arguments[i].length; o++ )
       {
-        this.data[iList] = arguments[i][o];
-        iList++;
+        if (typeof this.data[0] == typeof arguments[i][o] || typeof this.data[0] == 'undefined')
+        {
+          this.data[iList] = arguments[i][o];
+          iList++;
+        }
       }
     }
     else
     {
-      this.data[iList] = arguments[i];
-      iList++;
+      if (typeof this.data[0] == typeof arguments[i] || typeof this.data[0] == 'undefined')
+      {
+        this.data[iList] = arguments[i];
+        iList++;
+      }
     }
   }
 }
@@ -41,7 +47,11 @@ FancyList.prototype.getItemsAt = function(index, numberOfItems) {
 };
 
 FancyList.prototype.addItem = function(item) {
-  this.data[this.data.length] = item;
+
+  if (typeof this.data[0] == typeof item || typeof this.data[0] == 'undefined')
+  {
+    this.data[this.data.length] = item;
+  }
 
   return this.data;
 };
@@ -55,14 +65,20 @@ FancyList.prototype.addItems = function() {
     {
       for ( var o = 0; o < arguments[i].length; o++ )
       {
-        this.data[iList] = arguments[i][o];
-        iList++;
+        if (typeof this.data[0] == typeof arguments[i][o] || typeof this.data[0] == 'undefined')
+        {
+          this.data[iList] = arguments[i][o];
+          iList++;
+        }
       }
     }
     else
     {
-      this.data[iList] = arguments[i];
-      iList++;
+      if (typeof this.data[0] == typeof arguments[i] || typeof this.data[0] == 'undefined')
+      {
+        this.data[iList] = arguments[i];
+        iList++;
+      }
     }
   }
   return this.data;
@@ -72,13 +88,17 @@ FancyList.prototype.insertItemAt = function(index, item) {
 
   var arrayTmp = [];
   var iList = 0;
+  var start = index + 1;
 
-  for ( var i = index; i < this.data.length; i++ )
+  for ( var i = start; i < this.data.length; i++ )
   {
       arrayTmp[iList] = this.data[i];
       iList++;
   }
-  this.data[index] = item;
+  if (typeof this.data[0] == typeof item || typeof this.data[0] == 'undefined')
+  {
+    this.data[index] = item;
+  }
   iList = 0;
   index += 1;
   for ( var i = 0; i < arrayTmp.length; i++ )
@@ -107,14 +127,20 @@ FancyList.prototype.insertItemsAt = function() {
     {
       for ( var o = 0; o < arguments[i].length; o++ )
       {
-        this.data[index] = arguments[i][o];
-        index++;
+        if (typeof this.data[0] == typeof arguments[i][o] || typeof this.data[0] == 'undefined')
+        {
+          this.data[index] = arguments[i][o];
+          index++;
+        }
       }
     }
     else
     {
-      this.data[index] = arguments[i];
-      index++;
+      if (typeof this.data[0] == typeof arguments[i] || typeof this.data[0] == 'undefined')
+      {
+        this.data[index] = arguments[i];
+        index++;
+      }
     }
   }
 
@@ -129,45 +155,100 @@ FancyList.prototype.insertItemsAt = function() {
 
 FancyList.prototype.removeItemAt = function(index) {
 
+    var newArray = [];
+    var iList = 0;
+
+    for ( var i = 0; i < this.data.length; i++ )
+    {
+        if (i != index)
+        {
+          newArray[iList] = this.data[i];
+          iList++;
+        }
+    }
+
+    this.data = newArray;
+
+    return this.data;
 };
 
 FancyList.prototype.removeItemsAt = function(index, numberOfItems) {
 
+  var newArray = [];
+  var iList = 0;
+
+  for ( var i = 0; i < this.data.length; i++ )
+  {
+      if (i == index)
+      {
+        i += numberOfItems + 1;
+      }
+        newArray[iList] = this.data[i];
+        iList++;
+  }
+
+  this.data = newArray;
+
+  return this.data;
 };
 
 FancyList.prototype.removeItem = function(item) {
 
+  var newArray = [];
+  var iList = 0;
+
+  for ( var i = 0; i < this.data.length; i++ )
+  {
+      if (this.data[i] != item)
+      {
+        newArray[iList] = this.data[i];
+        iList++;
+      }
+  }
+
+  this.data = newArray;
+
+  return this.data;
 };
 
 FancyList.prototype.removeItems = function() {
-  
+
+  var newArray = [];
+  var iList = 0;
+  var ok = 0;
+
+  for ( var a = 0; a < this.data.length; a++ )
+  {
+    for ( var i = 0; i < arguments.length; i++ )
+    {
+      if (Array.isArray(arguments[i]) == true)
+      {
+        for ( var o = 0; o < arguments[i].length; o++ )
+        {
+          if (this.data[a] == arguments[i][o])
+          {
+            ok = 1;
+          }
+        }
+      }
+      else
+      {
+        if (this.data[a] == arguments[i])
+        {
+          ok = 1;
+        }
+      }
+    }
+    if (ok == 0)
+    {
+      newArray[iList] = this.data[a];
+      iList++;
+    }
+    ok = 0;
+  }
+
+  this.data = newArray;
+
+  return this.data;
+
 };
-
-// Debug
-
-var myList1 = new FancyList();
-var myList2 = new FancyList(3);
-var myList3 = new FancyList(3, 44, 22, 33, 23, 34, 35,99, 093, 32);
-var myList4 = new FancyList([5, 6]);
-
-var data = myList3.addItem(90);
-console.log(data);
-var data = myList3.addItem(200);
-console.log(data);
-var data = myList3.addItems(230, 20, 30);
-console.log(data);
-
-var data = myList3.addItems([250, 90, 230]);
-console.log(data);
-
-var data = myList3.insertItemAt(3, 45);
-console.log(data);
-
-var data = myList3.insertItemsAt(5, 18, 19, 20);
-console.log(data);
-
-var data = myList3.insertItemsAt(2, 10, 11, 12);
-console.log(data);
-
-var data = myList3.removeItemAt(2);
-console.log(data);
