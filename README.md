@@ -1,4 +1,4 @@
-# Technical Test For Checkout.com - FancyList
+# Technical Test For a company - FancyList
 Build a JS class called "FancyList" that simulates a list and provides all methods and properties to manage the list and retrieving vital information about the list.
 
 The list should secretly host an Array which is private to the FancyList class.
